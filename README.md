@@ -10,7 +10,7 @@ use it as a the jetpack, ...
 ### Team
 
 The team has 4 members :
-*Tom Dall'Agnol
-*Glenn Feunteun
-*Hélène Michon
-*Fabien Vicente
+* Tom Dall'Agnol
+* Glenn Feunteun
+* Hélène Michon
+* Fabien Vicente

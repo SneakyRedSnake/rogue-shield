@@ -32,7 +32,8 @@ public class TestSceneGenerator : MonoBehaviour {
 		generatePlatform (30, new Vector2(50, 25));
 
 		/*	Instantiate the player	*/
-		spawnPlayer (spawnPosition);
+        /*  Disable Player Spawn temporaly */
+		//spawnPlayer (spawnPosition);
 
 		/*	Save the scene to a file	*/
 		//saveGeneratedScene ("./Assets/Scene/GeneratedScene.unity");

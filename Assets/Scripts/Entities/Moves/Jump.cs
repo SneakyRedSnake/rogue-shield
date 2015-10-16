@@ -42,17 +42,7 @@ public class Jump : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		if (baseEntity.isGrounded && jump) {
-			//launch the jump
-			if(currentJump != null){
-				StopCoroutine(currentJump);
-			}
-			Debug.Log ("Launch jump");
-			currentJump = JumpCoroutine ();
-			StartCoroutine (currentJump);
-		} else if (baseEntity.isGrounded && currentJump != null) {
-			//StopCoroutine(currentJump);
-		}
+
 	}
 	
 	
@@ -88,7 +78,6 @@ public class Jump : MonoBehaviour
 			time += Time.deltaTime;
 			yield return null;
 		}
-		Debug.Log ("==========================FIN==========================");
 		//we don't want to jump anymore
 		jump = false;
 		currentJump = null;

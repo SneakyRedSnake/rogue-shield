@@ -1,8 +1,19 @@
-Library/
-Temp/
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+.vs/
 
-*.meta
-*.sln
-*.userprefs
-*.sln
 *.csproj
+*.meta
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+
+*.pidb.meta
+
+sysinfo.txt

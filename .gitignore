@@ -4,7 +4,6 @@
 .vs/
 
 *.csproj
-*.meta
 *.unityproj
 *.sln
 *.suo

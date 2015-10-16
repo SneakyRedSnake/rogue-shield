@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: bbd756681812c5a44b3918a786c7da7b
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - player: {fileID: 483090, guid: 21d1ca41872ed2045b46f17bceea2f64, type: 2}
+  - playerCamera: {fileID: 485892, guid: 296a50bde21e90d4eb241a908d9dfdb3, type: 2}
+  - wall: {fileID: 439592, guid: 04f244f874299bb40b32905a6fbf550e, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

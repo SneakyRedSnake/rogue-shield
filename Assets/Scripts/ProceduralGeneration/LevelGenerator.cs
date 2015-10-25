@@ -8,6 +8,9 @@ namespace Procedural
 	{
 		[Tooltip("Put here Wall Prefab ! ")]
 		public Transform wall;
+		public Transform player;
+		public Transform camera;
+
 		public int minimumDistance = 6;
 		public int maximumDistance = 10;
 		public Vector2 startingPosition = new Vector2 (0, 0);
@@ -16,6 +19,7 @@ namespace Procedural
 		public int levelHeight = 10;
 		public LevelGenerationStrategy levelGenerationStrategy;
 
+		private int roomCounter = 0;
 		private Transform environment; 				// Stores the roo object for the environment
 		// Use this for initialization
 		void Start ()
@@ -31,7 +35,9 @@ namespace Procedural
 
 			foreach (Vector2 v in level.Layout) {
 				generateRoom (level.Rooms[(int)v.x, (int)v.y]);
-			}		
+			}
+			Instantiate (player, new Vector3 (2, 5, 0), Quaternion.identity);
+			Instantiate (camera, new Vector3 (5, 5, -2), Quaternion.identity);
 		}
 
 		public void instanciateWall (Vector2 position)
@@ -64,6 +70,10 @@ namespace Procedural
 			int height = room.Height;
 			Vector2 position = room.getPosition ();
 
+			GameObject roomFolder = new GameObject ("Room" + roomCounter);
+			Transform roomFolderTransform = roomFolder.transform;
+			roomFolderTransform.SetParent(environment);
+
 			foreach (Facing facing in room.getFacings()) {
 				int i, j;
 				i = j = 0;
@@ -76,7 +86,7 @@ namespace Procedural
 				case Facing.WEST:
 					for (j = 0; j < height; j++) {
 						Transform wallInstance = (Transform)Instantiate (wall, new Vector3 (i + position.x, j + position.y, 0), Quaternion.identity);
-						wallInstance.SetParent (environment);
+						wallInstance.SetParent (roomFolderTransform);
 					}
 					break;
 
@@ -87,12 +97,13 @@ namespace Procedural
 				case Facing.SOUTH:
 					for (i = 0; i < width; i++) {
 						Transform wallInstance = (Transform)Instantiate (wall, new Vector3 (i + position.x, j + position.y, 0), Quaternion.identity);
-						wallInstance.SetParent (environment);
+						wallInstance.SetParent (roomFolderTransform);
 					}
 					break;
 
 				}
 			}
+			roomCounter ++;
 		}
 
 		/**

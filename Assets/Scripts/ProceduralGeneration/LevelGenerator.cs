@@ -10,6 +10,7 @@ namespace Procedural
 		public Transform wall;
 		public Transform player;
 		public Transform camera;
+		public Transform ennemy;
 
 		public int minimumDistance = 6;
 		public int maximumDistance = 10;
@@ -38,6 +39,7 @@ namespace Procedural
 			}
 			Instantiate (player, new Vector3 (2, 5, 0), Quaternion.identity);
 			Instantiate (camera, new Vector3 (5, 5, -2), Quaternion.identity);
+			Instantiate (ennemy, new Vector3 ((endPosition.x * 10) + 2, (endPosition.y * 10) + 2, 0 ), Quaternion.identity);
 		}
 
 		public void instanciateWall (Vector2 position)

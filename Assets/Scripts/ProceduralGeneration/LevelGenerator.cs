@@ -17,6 +17,7 @@ namespace Procedural
 		public LevelGenerationStrategy levelGenerationStrategy;
 
 		private Transform environment; 				// Stores the roo object for the environment
+		private int roomIndice = 0;
 		// Use this for initialization
 		void Start ()
 		{
@@ -64,6 +65,10 @@ namespace Procedural
 			int height = room.Height;
 			Vector2 position = room.getPosition ();
 
+			GameObject roomTransformObject = new GameObject ("Room" + roomIndice);
+			Transform roomTransform = roomTransformObject.GetComponent<Transform> ();
+			roomTransform.SetParent (environment);
+
 			foreach (Facing facing in room.getFacings()) {
 				int i, j;
 				i = j = 0;
@@ -76,7 +81,7 @@ namespace Procedural
 				case Facing.WEST:
 					for (j = 0; j < height; j++) {
 						Transform wallInstance = (Transform)Instantiate (wall, new Vector3 (i + position.x, j + position.y, 0), Quaternion.identity);
-						wallInstance.SetParent (environment);
+						wallInstance.SetParent (roomTransform);
 					}
 					break;
 
@@ -87,12 +92,14 @@ namespace Procedural
 				case Facing.SOUTH:
 					for (i = 0; i < width; i++) {
 						Transform wallInstance = (Transform)Instantiate (wall, new Vector3 (i + position.x, j + position.y, 0), Quaternion.identity);
-						wallInstance.SetParent (environment);
+						wallInstance.SetParent (roomTransform);
 					}
 					break;
 
 				}
 			}
+
+			roomIndice++;
 		}
 
 		/**

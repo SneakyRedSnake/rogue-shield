@@ -28,6 +28,6 @@ public class ShieldControl : MonoBehaviour {
 		float deg = Mathf.Rad2Deg * Mathf.Atan2(mousePos.y - pos.y, mousePos.x - pos.x);
 
 		//we do a rotation
-		rotateAround.RotationZ (deg, distShieldPlayer);
+		rotateAround.RotateAroundZ (deg, distShieldPlayer);
 	}
 }

@@ -7,7 +7,7 @@ using System.Collections;
 /// </summary>
 public class Repulse : MonoBehaviour {
 	[SerializeField]LayerMask whatCanRepulse;		//what the shield can repulse
-	[SerializeField]Vector2 repulseForce;			//the force of the repulsion
+	[SerializeField]float repulseForce = 10000f;			//the force of the repulsion
 
 
 	// Use this for initialization
@@ -17,7 +17,7 @@ public class Repulse : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 	/// <summary>
@@ -28,7 +28,7 @@ public class Repulse : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		//we check if we can repulse the other gameObject
 		if ((whatCanRepulse.value & 1<<other.gameObject.layer)>0){
-			other.gameObject.rigidbody2D.AddForce(repulseForce);
+			other.gameObject.rigidbody2D.AddForce(repulseForce * gameObject.transform.right);
 		}
 	}
 }

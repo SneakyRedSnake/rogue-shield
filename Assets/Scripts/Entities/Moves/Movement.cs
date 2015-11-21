@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
 {
 	[SerializeField]
 	[Range(0f,30f)] float maxSpeed = 10f;				// The fastest the game object can travel in the x axis.
-
+	[SerializeField] float moveForce = 10f;
 	
 	void Awake()
 	{
@@ -36,6 +36,9 @@ public class Movement : MonoBehaviour
 	/// <param name="move">the speed we want</param>
 	public void Move(float move)
 	{
-		rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
+		if (rigidbody2D.velocity.x < maxSpeed && rigidbody2D.velocity.x > -maxSpeed && move != 0) {
+			rigidbody2D.AddForce (new Vector2 (move * moveForce, 0),ForceMode2D.Force);
+		}
+		//rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
 	}
 }

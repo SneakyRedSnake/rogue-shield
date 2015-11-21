@@ -5,10 +5,13 @@ using System.Collections;
 /// 	The controller of the shield
 /// </summary>
 [RequireComponent(typeof(RotateAroundPivot))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class ShieldControl : MonoBehaviour {
+	private const int RIGHTCLICK = 1;					//the code of the Right click of the mouse
 
-	private RotateAroundPivot rotateAround;			//The component to do a rotation around sth
-	[SerializeField]float distShieldPlayer = 4;		//The distance we want between the shield and the player
+	[SerializeField]private BoxCollider2D boxCollider;	//The box collider of the gameobject 
+	private RotateAroundPivot rotateAround;				//The component to do a rotation around sth
+	[SerializeField]float distShieldPlayer = 4;			//The distance we want between the shield and the player
 
 	// Use this for initialization
 	void Start () {
@@ -23,6 +26,9 @@ public class ShieldControl : MonoBehaviour {
 		
 		//we get the position of the camera relative at the current scene
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+		//it's a trigger only if the shield is active
+		boxCollider.isTrigger = Input.GetMouseButton (RIGHTCLICK);
 
 		//we calculate the angle
 		float deg = Mathf.Rad2Deg * Mathf.Atan2(mousePos.y - pos.y, mousePos.x - pos.x);

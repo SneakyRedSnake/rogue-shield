@@ -18,10 +18,22 @@ public class UserControl : MonoBehaviour
 		movePlayer = GetComponent<Movement>();
 		jumpPlayer = GetComponent<Jump>();
 	}
-	
+
+	/// <summary>
+	/// 	Get the inputs of the controller and give the values
+	/// 	to the corrects actions components
+	/// </summary>
 	void Update ()
 	{
-
+		
+		bool beginJ = Input.GetButtonDown("Jump");
+		bool releaseJ = Input.GetButtonUp("Jump");
+		if (beginJ) {
+			jumpPlayer.triggerJump();
+		}
+		if (releaseJ) {
+			jumpPlayer.endJump();
+		}
 	}
 
 	/// <summary>
@@ -32,16 +44,8 @@ public class UserControl : MonoBehaviour
 	{
 		// Read the inputs.
 		float h = Input.GetAxis("Horizontal");
-		bool beginJ = Input.GetButtonDown("Jump");
-		bool releaseJ = Input.GetButtonUp("Jump");
 		// Pass the parameter to the Move script.
 		movePlayer.Move(h);
-
-		if (beginJ) {
-			jumpPlayer.triggerJump();
-		}
-		if (releaseJ) {
-			jumpPlayer.endJump();
-		}
+	
 	}
 }

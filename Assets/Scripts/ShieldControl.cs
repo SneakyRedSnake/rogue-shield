@@ -13,9 +13,12 @@ public class ShieldControl : MonoBehaviour {
 	private RotateAroundPivot rotateAround;				//The component to do a rotation around sth
 	[SerializeField]float distShieldPlayer = 4;			//The distance we want between the shield and the player
 
+	private StatePlayer statePlayer;
+
 	// Use this for initialization
 	void Start () {
 		rotateAround = GetComponent<RotateAroundPivot>();
+		statePlayer = transform.root.GetComponent<StatePlayer> ();
 	}
 	
 	// Update is called once per frame
@@ -28,7 +31,9 @@ public class ShieldControl : MonoBehaviour {
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 		//it's a trigger only if the shield is active
-		boxCollider.isTrigger = Input.GetMouseButton (RIGHTCLICK);
+		bool clicked = Input.GetMouseButton (RIGHTCLICK);
+		statePlayer.ActivateShield (clicked);
+		boxCollider.isTrigger = clicked;
 
 		//we calculate the angle
 		float deg = Mathf.Rad2Deg * Mathf.Atan2(mousePos.y - pos.y, mousePos.x - pos.x);

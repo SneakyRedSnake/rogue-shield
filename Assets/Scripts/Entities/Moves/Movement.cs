@@ -7,28 +7,7 @@ using System.Collections;
 public class Movement : MonoBehaviour 
 {
 	[SerializeField]
-	[Range(0f,30f)] float maxSpeed = 10f;				// The fastest the game object can travel in the x axis.
-
-	
-	void Awake()
-	{
-
-	}
-
-	/// <summary>
-	/// 	Update the rigidbody2D, giving a velocity to it
-	/// </summary>
-	void Update()
-	{
-
-	}
-
-	/// <summary>
-	/// 	do nothing
-	/// </summary>
-	void FixedUpdate()
-	{
-	}
+	[Range(0f,100f)] float maxSpeed = 10f;				// The fastest the game object can travel in the x axis.
 	
 	/// <summary>
 	/// 	Set the move float

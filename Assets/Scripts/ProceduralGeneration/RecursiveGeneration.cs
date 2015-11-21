@@ -11,17 +11,17 @@ namespace Procedural
 		private List<Vector2> layout;
 		private Vector2 startingPosition;
 		private Vector2 endPosition;
-		private int levelWidth, levelHeight;
+		private int horizontalRoomNb, verticalRoomNb;
 		private int minimumDistance,  maximumDistance;
 		private int currentGenIteration = -1;
 		private Vector2 comingFrom;
 
-		public RecursiveGeneration (int levelWidth, int levelHeight, Vector2 startingPosition, Vector2 endPosition, int minimumDistance, int maximumDistance)
+		public RecursiveGeneration (int horizontalRoomNb, int verticalRoomNb, Vector2 startingPosition, Vector2 endPosition, int minimumDistance, int maximumDistance)
 		{
 			float elapsedTime = Time.realtimeSinceStartup;
 			this.endPosition = endPosition;
-			this.levelWidth = levelWidth;
-			this.levelHeight = levelHeight;
+			this.horizontalRoomNb = horizontalRoomNb;
+			this.verticalRoomNb = verticalRoomNb;
 			this.minimumDistance = minimumDistance;
 			this.maximumDistance = maximumDistance;
 			comingFrom = new Vector2 (startingPosition.x, startingPosition.y - 1);
@@ -34,7 +34,7 @@ namespace Procedural
 			/* Generate direction set */
 			remainingDirections = new List<List<Facing>>(maximumDistance);
 			
-			rooms = new Room[levelWidth, levelHeight];
+			rooms = new Room[horizontalRoomNb, verticalRoomNb];
 			layout = new List<Vector2> (10);
 			findPath ((int)startingPosition.x, (int)startingPosition.y, minimumDistance);
 			
@@ -42,9 +42,9 @@ namespace Procedural
 			Debug.Log ("Generation time : " + elapsedTime);
 			Debug.Log ("Number of Rooms : " + layout.Count);
 			
-			RemoveBlockingWall ();
+			RemoveBlockingBorders ();
 
-			return new Level (levelWidth, levelHeight, layout, rooms);
+			return new Level (horizontalRoomNb, verticalRoomNb, layout, rooms);
 		}
 		#endregion
 
@@ -122,8 +122,8 @@ namespace Procedural
 
 		private void addRoomToLayout (int x, int y)
 		{
-			layout.Add (new Vector2 (x, y));
-			rooms [x, y] = new Room (new Vector2 (x * 10, y * 10));
+			layout.Add (new Vector2 (x , y));
+			rooms [x, y] = new Room (new Vector2 (x, y ));
 		}
 
 		/**
@@ -141,19 +141,19 @@ namespace Procedural
 					return false;
 			}
 			
-			return (((x >= 0) && (x < levelWidth)) && ((y >= 0) && (y < levelHeight)));
+			return (((x >= 0) && (x < horizontalRoomNb)) && ((y >= 0) && (y < verticalRoomNb)));
 		}
 
-		public void RemoveBlockingWall() {
+		public void RemoveBlockingBorders() {
 			
 			foreach (Vector2 lastRoomPos in layout) {
 				
 				int currentIndex = layout.IndexOf(lastRoomPos);
-				
-				if ( currentIndex == (layout.Count -1)) {
+
+				if ( lastRoomPos.x == endPosition.x && lastRoomPos.y == endPosition.y) {
 					return;
 				}
-				
+
 				Room lastRoom = rooms[(int)lastRoomPos.x, (int)lastRoomPos.y];
 				Room headingRoom = rooms[(int)layout[currentIndex + 1].x, (int)layout[currentIndex + 1].y];
 				
@@ -161,27 +161,27 @@ namespace Procedural
 				
 				switch (goingTo) {
 				case Facing.NORTH:
-					headingRoom.removeFacing (Facing.SOUTH);
+					headingRoom.removeClosedBorder (Facing.SOUTH);
 					if (lastRoom != null)
-						lastRoom.removeFacing (Facing.NORTH);
+						lastRoom.removeClosedBorder (Facing.NORTH);
 					break;
 					
 				case Facing.SOUTH:
-					headingRoom.removeFacing (Facing.NORTH);
+					headingRoom.removeClosedBorder (Facing.NORTH);
 					if (lastRoom != null)
-						lastRoom.removeFacing (Facing.SOUTH);
+						lastRoom.removeClosedBorder (Facing.SOUTH);
 					break;
 					
 				case Facing.EAST:
-					headingRoom.removeFacing (Facing.WEST);
+					headingRoom.removeClosedBorder (Facing.WEST);
 					if (lastRoom != null)
-						lastRoom.removeFacing (Facing.EAST);
+						lastRoom.removeClosedBorder (Facing.EAST);
 					break;
 					
 				case Facing.WEST:
-					headingRoom.removeFacing (Facing.EAST);
+					headingRoom.removeClosedBorder (Facing.EAST);
 					if (lastRoom != null)
-						lastRoom.removeFacing (Facing.WEST);
+						lastRoom.removeClosedBorder (Facing.WEST);
 					break;
 				}
 			}

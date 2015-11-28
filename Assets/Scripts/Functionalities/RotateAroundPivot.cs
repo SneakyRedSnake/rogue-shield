@@ -22,7 +22,7 @@ public class RotateAroundPivot : MonoBehaviour {
 	/// 	Rotation under the z axes using Quaternion.Euler
 	/// </summary>
 	/// <param name="z">The angle with the z axes</param>
-	public void RotationZ(float z, float distOfPivot){
+	public void RotateAroundZ(float z, float distOfPivot){
 		//We rotate the game object
 		transform.rotation = Quaternion.Euler(0,0,z);
 

@@ -8,17 +8,19 @@ namespace Procedural
 	public class Room
 	{
 		private Vector2 position;
-		private int width = 10;
-		private int height = 10;
-		private HashSet<Facing> facings;
+		private int width = 20;
+		private int height = 20;
+		private HashSet<Facing> closedBorders;
+		private Component[,] components;
 
 		public Room (Vector2 position)
 		{
 			this.position = position;
-			facings = new HashSet<Facing> ();
+			closedBorders = new HashSet<Facing> ();
 			foreach (Facing facing in Enum.GetValues(typeof(Facing))) {
-				facings.Add (facing);
+				closedBorders.Add (facing);
 			}
+			components = new Component[width, height];
 		}
 
 		public Vector2 getPosition ()
@@ -26,14 +28,14 @@ namespace Procedural
 			return position;
 		}
 
-		public void removeFacing (Facing facing)
+		public void removeClosedBorder (Facing facing)
 		{
-			facings.Remove (facing);
+			closedBorders.Remove (facing);
 		}
 
-		public HashSet<Facing> getFacings ()
+		public HashSet<Facing> getClosedBorders ()
 		{
-			return facings;
+			return closedBorders;
 		}
 
 		public int Width {
@@ -46,6 +48,23 @@ namespace Procedural
 			get {
 				return this.height;
 			}
+		}
+
+		public void AddComponent(Component component, Vector2 position) {
+			components [(int)position.x, (int)position.y] = component;
+		}
+
+		public Component[,] Components {
+			get  {
+				return components;
+			}
+		}
+
+		public void Scale(int xScale, int yScale) {
+			this.width *= xScale;
+			this.height *= yScale;
+			this.position.x *= xScale;
+			this.position.y *= yScale;
 		}
 	}
 }

@@ -2,19 +2,17 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class playerHealth : healthScript {
+public class PlayerHealth : HealthBehavior {
 
-	[SerializeField] private string sliderFolder = "healthSlider";
 	[SerializeField] private float animateTime = 1f;
 	Slider healthSlider;
 	private float healthDiff;
 	private float elapsedTime;
 
 	public void OnEnable() {
-		GameObject healthUI = GameObject.Find (sliderFolder);
-		healthSlider = healthUI.GetComponentInChildren<Slider> ();
+		healthSlider = GameObject.Find ("HealthSlider").GetComponent<Slider>();
 		if (!healthSlider) {
-			Debug.Log("cannot find the slider in folder "+sliderFolder+"please add it or change its name");
+			Debug.Log("Cannot find the slider ");
 		}
 		healthSlider.minValue = 0f;
 		healthSlider.maxValue = 100f;

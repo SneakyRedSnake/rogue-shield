@@ -5,8 +5,8 @@ using System.Collections;
  * Script to use on a entity with health
  * 
  * */
-[RequireComponent(typeof (AbstractKillable))]
-public class healthScript : MonoBehaviour {
+
+public class HealthBehavior : MonoBehaviour {
 	[SerializeField] protected float maxHealth;
 	protected float health;
 	protected AbstractKillable killable;

@@ -19,6 +19,13 @@ public class BaseEntity : MonoBehaviour {
 	public bool isGrounded {
 		get {
 			Vector2 position = transform.position;
+			// FIXME When instantiated after launch with Instantiate
+			// isGrounded is called before the component is started
+			// and collids is null !
+			if (collids == null) {
+				Debug.Log("Bug");
+				return false;
+			}
 			position.y = collids.bounds.min.y + 0.1f;
 			Debug.DrawRay (position, -Vector2.up * isGroundedCircleRadius);
 			bool grounded = Physics2D.CircleCast (position, isGroundedCircleRadius, -Vector2.up, isGroundedCircleRadius, whatIsGround.value);

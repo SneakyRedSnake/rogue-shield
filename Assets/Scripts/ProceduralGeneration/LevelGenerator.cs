@@ -8,7 +8,7 @@ namespace Procedural
 	{
 		[Tooltip("Put here Wall Prefab ! ")]
 		public Transform wall;
-		public Transform player;
+		public GameObject player;
 		public Transform camera;
 		public Transform ennemy;
 		public Transform wallPlatformInstance;

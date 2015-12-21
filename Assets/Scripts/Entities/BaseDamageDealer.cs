@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class BaseDamageDealer : AbstractDamageDealer {
-	[SerializeField] float force = 10000;
-	[SerializeField] float damages = 100;
+	[SerializeField] public float force = 10000;
+	[SerializeField] public float damages = 100;
 	// Use this for initialization
 	void Start () {
 		

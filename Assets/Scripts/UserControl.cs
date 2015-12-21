@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// 	Component to control a gameobject
@@ -64,12 +64,12 @@ public class UserControl : MonoBehaviour
 	{
 		// Read the inputs.
 		float h = Input.GetAxis("Horizontal");
-
+		
 		if (statePlayer.shielded == StatePlayer.StateShield.Shield && basePlayer.IsGrounded()) {
 			h *= movementReduction;
 		}
 		// Pass the parameter to the Move script.
 		movePlayer.Move(h);
-	
+		
 	}
 }

@@ -12,6 +12,7 @@ namespace Procedural
 		private int height = 20;
 		private HashSet<Facing> closedBorders;
 		private Component[,] components;
+		private Facing nextRoomDirection; 
 
 		public Room (Vector2 position)
 		{
@@ -36,6 +37,11 @@ namespace Procedural
 		public HashSet<Facing> getClosedBorders ()
 		{
 			return closedBorders;
+		}
+
+		public Facing NextRoomDirection {
+			get;
+			set;
 		}
 
 		public int Width {

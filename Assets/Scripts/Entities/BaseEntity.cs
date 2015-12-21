@@ -17,7 +17,6 @@ public class BaseEntity : MonoBehaviour {
 	[SerializeField]float isGroundedCircleRadius = 0.1f;
 	//the bool to know if we are on the ground or not
 	private bool grounded;
-
 	// Use this for initialization
 	void Start () {
 		collids = GetComponent<Collider2D> ();

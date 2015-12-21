@@ -8,7 +8,7 @@ namespace Procedural
 	{
 		[Tooltip("Put here Wall Prefab ! ")]
 		public Transform wall;
-		public Transform player;
+		public GameObject player;
 		public Transform camera;
 		public Transform ennemy;
 		public Transform wallPlatformInstance;
@@ -42,11 +42,12 @@ namespace Procedural
 			levelGenerationStrategy = new RecursiveGeneration (horizontalRoomNb, verticalRoomNb, startingPosition, endPosition, minimumDistance, maximumDistance);
 			Level level = levelGenerationStrategy.generateLevel ();
 
+			// Instantiate each room and platforms
 			foreach (Vector2 v in level.Layout) {
 				Room room = level.Rooms[(int)v.x, (int)v.y];
 				room.Scale(xWallScaleFactor, yWallScaleFactor);
 
-				GenerateRoom (room, xWallScaleFactor, yWallScaleFactor);
+				InstantiateRoom (room, xWallScaleFactor, yWallScaleFactor);
 				PopulateRoom (room, xWallScaleFactor, yWallScaleFactor);
 
 				Component[,] comps = room.Components;
@@ -56,7 +57,7 @@ namespace Procedural
 					for(int j = 0; j < comps.GetLength(0); j++) {
 						if (comps[i, j] == Component.Platform) {
 							Debug.Log("Drawing on : " + i + " " + j + "   Value : " + comps[i,j]);
-							GeneratePlatform(new Vector2(room.getPosition().x * 20 + i * xWallScaleFactor, room.getPosition().y * 20 + j * yWallScaleFactor));
+							InstantiatePlatform(new Vector2(room.getPosition().x * 20 + i * xWallScaleFactor, room.getPosition().y * 20 + j * yWallScaleFactor));
 						}
 					}
 				}
@@ -76,7 +77,7 @@ namespace Procedural
 		/**
 		 * Generate a bordered square (not filled) beginning at position
 		 */
-		private void GenerateSquare (int width, int height, Vector2 position)
+		private void InstantiateSquare (int width, int height, Vector2 position)
 		{
 			for (int i = 0; i <= width; i++) {
 				for (int j = 0; j <= height; j++) {
@@ -89,7 +90,7 @@ namespace Procedural
 			}
 		}
 
-		private void GenerateRoom (Room room, int xWallScaleFactor, int yWallScaleFactor)
+		private void InstantiateRoom (Room room, int xWallScaleFactor, int yWallScaleFactor)
 		{
 			int width = room.Width;
 			int height = room.Height;
@@ -134,22 +135,36 @@ namespace Procedural
 			roomCounter ++;
 		}
 
+		private void PopulateRandom (Room room, int width, int height) {
+
+			for (int i = 0; i < 20; i++) {
+				int xRand = (int) UnityEngine.Random.Range (2, height - 2);
+				int yRand = (int) UnityEngine.Random.Range (2, width - 2);
+				Debug.Log(xRand + " : " + yRand);
+				room.AddComponent(Component.Platform, new Vector2(xRand, yRand));
+			}
+		}
+
 		private void PopulateRoom( Room room, int xScaleFactor, int yScaleFactor) {
 			int width = room.Width / xScaleFactor;
 			int height = room.Height / yScaleFactor;
 
-			for (int i = 0; i < 4; i++) {
-				int xRand = (int) UnityEngine.Random.Range (5, height - 5);
-				int yRand = (int) UnityEngine.Random.Range (5, width - 5);
-				Debug.Log(xRand + " : " + yRand);
-				room.AddComponent(Component.Platform, new Vector2(xRand, yRand));
+			switch (room.NextRoomDirection) {
+			case Facing.EAST:
+			case Facing.WEST:
+				break;
+			case Facing.SOUTH:
+				break;
+			case Facing.NORTH:
+				PopulateRandom(room, width, height);
+				break;
 			}
 		}
 
 		/**
 		 * Generate Horizontal platform beginning at position
 		 */ 
-		private void GeneratePlatform (Vector2 position)
+		private void InstantiatePlatform (Vector2 position)
 		{
 				Transform platform = (Transform)Instantiate (wallPlatformInstance, new Vector3 (position.x, position.y, 0), Quaternion.identity);
 				platform.SetParent (environment);

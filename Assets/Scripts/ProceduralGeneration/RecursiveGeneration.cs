@@ -156,9 +156,10 @@ namespace Procedural
 
 				Room lastRoom = rooms[(int)lastRoomPos.x, (int)lastRoomPos.y];
 				Room headingRoom = rooms[(int)layout[currentIndex + 1].x, (int)layout[currentIndex + 1].y];
-				
+
 				Facing goingTo = GetHeadingDirection(lastRoomPos, layout[currentIndex + 1]);
-				
+				lastRoom.NextRoomDirection = goingTo;
+
 				switch (goingTo) {
 				case Facing.NORTH:
 					headingRoom.removeClosedBorder (Facing.SOUTH);
@@ -201,4 +202,5 @@ namespace Procedural
 		}
 	}
 }
+
 

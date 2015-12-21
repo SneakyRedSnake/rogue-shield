@@ -7,33 +7,39 @@ using System.Collections;
  * */
 
 public class HealthBehavior : MonoBehaviour {
-	[SerializeField] protected float maxHealth;
-	protected float health;
-	protected AbstractKillable killable;
-	[SerializeField] private float recoveryTime = 0.5f;
-	protected bool recovery = false;
+	[SerializeField] protected float maxHealth;// maximum health of the entity
+	protected float health;// current health
+	protected AbstractKillable killable;// the killable component to send it the death signal
+	[SerializeField] private float recoveryTime = 0.5f;//time of recovery between each damage taken
+	protected bool recovery = false;// recovery mode boolean
 
 	public void Start(){
 		health = maxHealth;
+		AbstractKillable killable = GetComponent<AbstractKillable> ();
+
 	}
 
 	void OnCollisionStay2D(Collision2D coll) {
+		//we get the damage dealer of the collider
 		AbstractDamageDealer dealer = coll.gameObject.GetComponentInParent<AbstractDamageDealer> ();
-
 	
-		if (dealer && !recovery) {
-			Debug.Log ("recovery "+recovery);
-			OnDamageTaken();
-			health -= dealer.getDamage(coll);
-			Debug.Log("health :"+health);
+		if (dealer && !recovery) {//if the collider is a damage dealer we act
+			OnDamageTaken();//call abstract signal for damage taken
+			health -= dealer.getDamage(coll);//we take the damage
+			// we calculate the vector between our center and the damage dealer's center
 			Vector3 pos = new Vector2(transform.position.x,transform.position.y);
 			pos = coll.gameObject.transform.position - gameObject.transform.position;
-			pos.Normalize();
-			Vector2 forcePos = new Vector2(pos.x,pos.y);
-			Vector2 force = Vector2.Scale(dealer.getForce(coll),-forcePos);
-			rigidbody2D.AddForce(force,ForceMode2D.Impulse);
-			Debug.Log("force:"+force+" "+pos);
-			if(recoveryTime > 0){
+			Vector2 forcePos = new Vector2(-pos.x,-pos.y);
+			forcePos.Normalize();
+			Vector2 force;
+			KnockBack();// signal to the health behaviour we receive a knockback effect
+			//we decide the direction of the force to apply
+			if(Mathf.Abs(forcePos.x)  > Mathf.Abs(forcePos.y) || forcePos.y < 0)
+				force = new Vector2(dealer.getForce(coll).x * Mathf.Sign(forcePos.x),0f);
+			else
+				force = new Vector2(0f,dealer.getForce(coll).y * Mathf.Sign(forcePos.y));
+			rigidbody2D.AddForce(force);
+			if(recoveryTime > 0){//we start the recovery coroutine
 				StartCoroutine(Recovery());
 			}
 		}
@@ -45,13 +51,15 @@ public class HealthBehavior : MonoBehaviour {
 
 	IEnumerator Recovery(){
 		recovery = true;
-		
-		Debug.Log ("recovery numerator");
 		yield return new WaitForSeconds(recoveryTime);
 		recovery = false;
 	}
 
 	public	virtual void OnDamageTaken() {
+
+	}
+
+	public virtual void KnockBack() {
 
 	}
 

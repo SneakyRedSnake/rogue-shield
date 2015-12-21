@@ -8,7 +8,8 @@ namespace Procedural
 		NORTH,
 		SOUTH,
 		EAST,
-		WEST
+		WEST,
+		NONE
 	}
 
 	public static class Extension {
@@ -24,7 +25,7 @@ namespace Procedural
 				return Facing.NORTH;
 
 			default:
-				return Facing.NORTH;
+				return Facing.NONE;
 			}
 		}
 	}

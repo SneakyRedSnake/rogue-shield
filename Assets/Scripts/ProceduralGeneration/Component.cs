@@ -4,8 +4,10 @@ namespace Procedural
 {
 	public enum Component
 	{
+		None,
 		Collectible,
-		Platform
+		Platform,
+		Wall
 	}
 }
 

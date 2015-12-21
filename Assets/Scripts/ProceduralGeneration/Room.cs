@@ -12,6 +12,7 @@ namespace Procedural
 		private int height = 20;
 		private HashSet<Facing> closedBorders;
 		private Component[,] components;
+
 		private Facing nextRoomDirection; 
 
 		public Room (Vector2 position)
@@ -22,6 +23,12 @@ namespace Procedural
 				closedBorders.Add (facing);
 			}
 			components = new Component[width, height];
+			for (int i = 0; i < width; i++) {
+				for(int j = 0; j < height; j++) {
+					if((j==0) || (j == height -1) || (i == 0) || i == (width - 1))
+						components[i,j] = Component.Wall;
+				}
+			}
 		}
 
 		public Vector2 getPosition ()

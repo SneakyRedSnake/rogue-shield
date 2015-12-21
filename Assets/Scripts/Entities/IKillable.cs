@@ -1,5 +1,5 @@
 
 
 public interface IKillable {
-	void kill();
+	void Kill();
 }

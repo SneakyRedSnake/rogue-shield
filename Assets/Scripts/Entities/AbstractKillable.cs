@@ -5,6 +5,6 @@ using System.Collections;
 
 public abstract class AbstractKillable : MonoBehaviour, IKillable {
 	
-	public abstract void kill();
+	public abstract void Kill();
 }
 

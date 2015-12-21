@@ -15,6 +15,11 @@ public class HealthBehavior : MonoBehaviour {
 
 	public void Start(){
 		health = maxHealth;
+	}
+
+	public void OnEnable() {
+		
+		health = maxHealth;
 		killable = GetComponent<AbstractKillable> ();
 
 	}
@@ -25,7 +30,10 @@ public class HealthBehavior : MonoBehaviour {
 	
 		if (dealer && !recovery) {//if the collider is a damage dealer we act
 			OnDamageTaken();//call abstract signal for damage taken
+			
+			Debug.Log("health: "+health);
 			health -= dealer.getDamage(coll);//we take the damage
+			Debug.Log("we take "+dealer.getDamage(coll)+" damages");
 			// we calculate the vector between our center and the damage dealer's center
 			Vector3 pos = new Vector2(transform.position.x,transform.position.y);
 			pos = coll.gameObject.transform.position - gameObject.transform.position;
@@ -38,14 +46,16 @@ public class HealthBehavior : MonoBehaviour {
 				force = new Vector2(dealer.getForce(coll).x * Mathf.Sign(forcePos.x),0f);
 			else
 				force = new Vector2(0f,dealer.getForce(coll).y * Mathf.Sign(forcePos.y));
+
 			rigidbody2D.AddForce(force);
 			if(recoveryTime > 0){//we start the recovery coroutine
 				StartCoroutine(Recovery());
 			}
+			if (health <= 0 && killable) {
+				killable.Kill();
+			}
 		}
-		if (health <= 0 && killable) {
-			killable.kill();
-		}
+
 
 	}
 

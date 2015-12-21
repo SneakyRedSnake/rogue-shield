@@ -22,8 +22,13 @@ public class Inventory : MonoBehaviour {
 	/// 	use them)
 	/// </summary>
 	void Start(){
+		GameObject inv = GameObject.Find ("inventory");
+		if (!inv) {
+			inv = new GameObject("inventory");
+		}
 		for(int i = 0; i < this.CurrentSize(); i++){
 			inventory[i] = (GameObject)Instantiate(inventory[i]);
+			inventory[i].transform.parent = this.gameObject.transform;
 			inventory[i].SetActive(false);
 		}
 	}
@@ -49,8 +54,10 @@ public class Inventory : MonoBehaviour {
 	/// <param name="item">The item we want to add.</param>
 	public void Add(GameObject item){
 		int size = this.CurrentSize ();
+		item.transform.parent = this.gameObject.transform;
+		GameObject inv = GameObject.Find ("inventory");
 		if (size >= maxSize) {
-
+			inventory[0].transform.parent = inv.transform;
 			inventory[0].transform.position = this.gameObject.transform.position;
 			inventory[0].SetActive(true);
 			inventory[0].rigidbody2D.AddForce(new Vector2(10,300));

@@ -20,15 +20,18 @@ public class KillableReleaseInventory : AbstractKillable {
 	/// </summary>
 	public override void kill(){
 		GameObject[] items = inventory.inventory;
+		GameObject inv = GameObject.Find ("inventory");
 		//for each item in the inventory
 		for(int i = 0; i<inventory.CurrentSize(); i++){
 			//we simulate an ejection from the enemy's body
+			items[i].transform.parent = inv.transform;
 			items[i].transform.position = this.gameObject.transform.position;
 			Vector2 randomVector = new Vector2(Random.Range (-1,1), Random.value);
           	randomVector.Normalize();
 			randomVector *= power;
 			items[i].rigidbody2D.AddForce(randomVector);
 			items[i].SetActive(true);
+
 		}
 		Destroy (gameObject);
 	}

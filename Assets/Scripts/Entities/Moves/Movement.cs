@@ -47,9 +47,7 @@ public class Movement : MonoBehaviour
 				move *= maxSpeed;
 
 			} else {
-				move = rigidbody2D.velocity.x + Time.deltaTime * maxSpeed * (airControl ? move*airControlAccelerationFactor : 0);
-				if (Mathf.Abs (move) > maxSpeed)
-					move = maxSpeed * Mathf.Sign (move);
+				move = maxSpeed * (airControl ? move*airControlAccelerationFactor : 0);
 			}
 			float speedX = rigidbody2D.velocity.x + move * accelerationSpeed * Time.deltaTime;
 			if (Mathf.Abs (speedX) > maxSpeed)

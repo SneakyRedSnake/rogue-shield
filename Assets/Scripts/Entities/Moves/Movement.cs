@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
 	[SerializeField] bool airControl = true;//whether the player can be controlled while in the air
 	[SerializeField] float accelerationSpeed = 100;//speed of acceleration
 	[SerializeField] float knockBackInactionTime = 0.2f;//time while we cannot move after a knockback
+	[SerializeField] float airControlAccelerationFactor = 10f;//speed of move changement while in the air
 	bool isKnocked = false;
 
 	private BaseEntity baseEntity;
@@ -46,7 +47,7 @@ public class Movement : MonoBehaviour
 				move *= maxSpeed;
 
 			} else {
-				move = rigidbody2D.velocity.x + Time.deltaTime * maxSpeed * (airControl ? move : 1);
+				move = rigidbody2D.velocity.x + Time.deltaTime * maxSpeed * (airControl ? move*airControlAccelerationFactor : 0);
 				if (Mathf.Abs (move) > maxSpeed)
 					move = maxSpeed * Mathf.Sign (move);
 			}

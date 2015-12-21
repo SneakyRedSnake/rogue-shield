@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BaseEnemy : AbstractDamageDealer {
-	[SerializeField] float force = 10000;
-	[SerializeField] float damages = 100;
+public class BaseEnemy : HealthBehavior {
+	private Movement movement;
 	// Use this for initialization
 	void Start () {
-	
+		movement = GetComponent<Movement> ();
 	}
 	
 	// Update is called once per frame
@@ -14,13 +13,14 @@ public class BaseEnemy : AbstractDamageDealer {
 	
 	}
 
-	public override float getDamage(Collision2D col){
-		return damages;
+	public override void OnDamageTaken(){
+		
+	}
+	
+	
+	public override void KnockBack() {
+		if(movement != null)
+			movement.KnockBack ();
 	}
 
-	//Gives a vector representing the knockback force of the damage dealer
-	//you can change that so the force is different depending on the axis of the force
-	public override Vector2 getForce(Collision2D col){
-		return new Vector2(force,force);
-	}
 }

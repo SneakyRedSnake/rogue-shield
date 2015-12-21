@@ -18,7 +18,7 @@ public class KillableReleaseInventory : AbstractKillable {
 	/// <summary>
 	/// 	Kill the entity and release all his items
 	/// </summary>
-	public override void kill(){
+	public override void Kill(){
 		GameObject[] items = inventory.inventory;
 		//for each item in the inventory
 		for(int i = 0; i<inventory.CurrentSize(); i++){

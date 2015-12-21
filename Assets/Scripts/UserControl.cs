@@ -40,6 +40,7 @@ public class UserControl : MonoBehaviour
 		bool beginJ = Input.GetButtonDown("Jump");
 		bool releaseJ = Input.GetButtonUp("Jump");
 		bool use = Input.GetButtonDown ("Use");
+		bool take = Input.GetButtonDown ("Take");
 		if (beginJ) {
 			jumpPlayer.triggerJump();
 		}
@@ -48,7 +49,10 @@ public class UserControl : MonoBehaviour
 		}
 		if (use) {
 			inventory.Use(0);
-			Debug.Log (inventory.GetInventoryContent());
+			Debug.Log ("inventory : " + inventory.GetInventoryContent());
+		}
+		if (take) {
+			statePlayer.TakeItem();
 		}
 	}
 
@@ -61,7 +65,7 @@ public class UserControl : MonoBehaviour
 		// Read the inputs.
 		float h = Input.GetAxis("Horizontal");
 
-		if (statePlayer.shielded == StatePlayer.StateShield.Shield && basePlayer.isGrounded) {
+		if (statePlayer.shielded == StatePlayer.StateShield.Shield && basePlayer.IsGrounded()) {
 			h *= movementReduction;
 		}
 		// Pass the parameter to the Move script.

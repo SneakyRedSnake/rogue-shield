@@ -21,5 +21,6 @@ public interface IItem{
 	/// 	Do an action when someone pick up the item
 	/// </summary>
 	/// <param name="receiver">The gameobject which receives the object</param>
-	void PickUp(GameObject receiver);
+	/// <returns><c>true</c> if has been picked up, <c>false</c> otherwise.</returns>
+	bool PickUp(GameObject receiver);
 }

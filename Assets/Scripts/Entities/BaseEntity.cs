@@ -16,22 +16,23 @@ public class BaseEntity : MonoBehaviour {
 	//the radius of the circle where we will check if we have the ground
 	[SerializeField]float isGroundedCircleRadius = 0.1f;
 	//the bool to know if we are on the ground or not
-	public bool isGrounded {
-		get {
-			Vector2 position = transform.position;
-			position.y = collids.bounds.min.y + 0.1f;
-			Debug.DrawRay (position, -Vector2.up * isGroundedCircleRadius);
-			bool grounded = Physics2D.CircleCast (position, isGroundedCircleRadius, -Vector2.up, isGroundedCircleRadius, whatIsGround.value);
-			return grounded;
-		}
-	}
+	private bool grounded;
 
 	// Use this for initialization
 	void Start () {
 		collids = GetComponent<Collider2D> ();
+		this.grounded = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		Vector2 position = transform.position;
+		position.y = collids.bounds.min.y + 0.1f;
+		Debug.DrawRay (position, -Vector2.up * isGroundedCircleRadius);
+		this.grounded = Physics2D.CircleCast (position, isGroundedCircleRadius, -Vector2.up, isGroundedCircleRadius, whatIsGround.value);
+	}
+
+	public bool IsGrounded() {
+		return this.grounded;
 	}
 }

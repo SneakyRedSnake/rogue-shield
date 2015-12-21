@@ -16,6 +16,11 @@ public class Inventory : MonoBehaviour {
 	public GameObject[] inventory { get { return inventoryList.inventory; } }
 
 
+	/// <summary>
+	/// 	We instantiate all the items in the inventory at the start
+	/// 	(they are prefab so we need to instantiate them in order to
+	/// 	use them)
+	/// </summary>
 	void Start(){
 		for(int i = 0; i < this.CurrentSize(); i++){
 			inventory[i] = (GameObject)Instantiate(inventory[i]);
@@ -23,6 +28,10 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// 	The current size of the inventory (the number of item in it)
+	/// </summary>
+	/// <returns>The size of the inventory.</returns>
 	public int CurrentSize(){
 		for(int i = 0; i < inventory.Length; i++){
 			if(!inventory[i]){
@@ -34,17 +43,21 @@ public class Inventory : MonoBehaviour {
 
 	/// <summary>
 	/// 	Add the specified item to the inventory
+	/// 	If the inventory is full, we throw aways
+	/// 	the first item
 	/// </summary>
 	/// <param name="item">The item we want to add.</param>
-	/// <returns><c>true</c> if we achieve to add it, <c>false</c> otherwise</returns>
-	public bool Add(GameObject item){
+	public void Add(GameObject item){
 		int size = this.CurrentSize ();
-		if (size < maxSize) {
-			Debug.Log ("In the inventory");
-			inventory[size] = item;
-			return true;
+		if (size >= maxSize) {
+
+			inventory[0].transform.position = this.gameObject.transform.position;
+			inventory[0].SetActive(true);
+			inventory[0].rigidbody2D.AddForce(new Vector2(10,300));
+			this.RemoveAt(0);
 		}
-		return false;
+		Debug.Log ("In the inventory");
+		inventory[size%maxSize] = item;
 	}
 
 	/// <summary>

@@ -15,13 +15,12 @@ public abstract class Item : MonoBehaviour, IItem {
 		Inventory inventory = receiver.GetComponent<Inventory> ();
 		//if there is an inventory
 		if (inventory) {
-			//if succeed to add the gameobject to the inventory
-			if(inventory.Add(this.gameObject)){
-				//the current game object is inactive for the moment
-				this.gameObject.SetActive(false);
-				Debug.Log("inventory : "+inventory.GetInventoryContent());
-				return true;
-			}
+			//we add the gameobject to the inventory
+			inventory.Add(this.gameObject);
+			//the current game object is inactive for the moment
+			this.gameObject.SetActive(false);
+			Debug.Log("inventory : "+inventory.GetInventoryContent());
+			return true;
 		}
 		return false;
 	}

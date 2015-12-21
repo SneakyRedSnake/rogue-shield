@@ -14,6 +14,7 @@ public class healthScript : MonoBehaviour {
 	protected bool recovery = false;
 
 	public void Start(){
+		killable = GetComponent<AbstractKillable> ();
 		health = maxHealth;
 	}
 

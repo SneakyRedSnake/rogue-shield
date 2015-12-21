@@ -9,7 +9,6 @@ namespace Procedural
 		[Tooltip("Put here Wall Prefab ! ")]
 		public Transform wall;
 		public GameObject player;
-		public Transform camera;
 		public Transform ennemy;
 		public Transform wallPlatformInstance;
 
@@ -63,7 +62,6 @@ namespace Procedural
 				}
 			}
 			Instantiate (player, new Vector3 (xWallScaleFactor + 2, yWallScaleFactor + 5, 0), Quaternion.identity);
-			Instantiate (camera, new Vector3 (xWallScaleFactor + 5, yWallScaleFactor + 5, -2), Quaternion.identity);
 			Instantiate (ennemy, new Vector3 (xWallScaleFactor + 30, yWallScaleFactor + 20, 0 ), Quaternion.identity);
 		}
 

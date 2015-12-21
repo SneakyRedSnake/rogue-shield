@@ -43,7 +43,7 @@ public class Movement : MonoBehaviour
 	public void Move(float move)
 	{
 		if (!isKnocked) {//we can only move if we are not knocked back
-			if (baseEntity.isGrounded) {
+			if (baseEntity.IsGrounded()) {
 				move *= maxSpeed;
 
 			} else {

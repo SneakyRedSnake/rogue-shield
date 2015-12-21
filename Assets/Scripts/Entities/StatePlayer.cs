@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 /// <summary>
 /// 	State of the current player
 /// </summary>
+
 public class StatePlayer : MonoBehaviour {
 	
-	public enum StateShield{Shield, NoShield};			
+	public enum StateShield{Shield, NoShield};		
+	private IList<GameObject> itemsInRange;
 
 	public StateShield shielded{get; private set;}	//to know if the player has is shield activated
 
@@ -15,6 +17,7 @@ public class StatePlayer : MonoBehaviour {
 	/// </summary>
 	void Start () {
 		this.shielded = StateShield.NoShield;
+		itemsInRange = new List<GameObject> ();
 	}
 
 	/// <summary>
@@ -29,5 +32,34 @@ public class StatePlayer : MonoBehaviour {
 			this.shielded = StateShield.NoShield;
 	}
 
+	/// <summary>
+	/// 	Adds the item triggered.
+	/// </summary>
+	/// <param name="item">Item.</param>
+	public void AddItemTriggered(GameObject item){
+		itemsInRange.Add (item);
+	}
 
+	/// <summary>
+	///		Removes the item triggered.
+	/// </summary>
+	/// <param name="item">Item.</param>
+	public void RemoveItemTriggered(GameObject item){
+		itemsInRange.Remove (item);
+	}
+
+	/// <summary>
+	/// 	Takes the first item of the list.
+	/// </summary>
+	public void TakeItem(){
+		if (itemsInRange.Count > 0) {
+			Debug.Log ("Can pickup");
+			GameObject itemToTake = itemsInRange [0];
+			Item item = itemToTake.GetComponent<Item>();
+			//if the player has picked up the item we remove it from the list of items we can pick up
+			if(item.PickUp(gameObject.transform.GetChild(0).gameObject))
+				RemoveItemTriggered(itemToTake);
+		}
+
+	}
 }

@@ -52,7 +52,7 @@ public class Jump : MonoBehaviour
 	/// 
 	public void triggerJump()
 	{
-		if (baseEntity.isGrounded) {
+		if (baseEntity.IsGrounded()) {
 			currentJump = JumpCoroutine();
 			StartCoroutine (currentJump);
 		}

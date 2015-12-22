@@ -19,7 +19,7 @@ public abstract class Item : MonoBehaviour, IItem {
 			inventory.Add(this.gameObject);
 			//the current game object is inactive for the moment
 			this.gameObject.SetActive(false);
-			Debug.Log("inventory : "+inventory.GetInventoryContent());
+			Debug.Log(" pick up inventory : "+inventory.GetInventoryContent());
 			return true;
 		}
 		return false;

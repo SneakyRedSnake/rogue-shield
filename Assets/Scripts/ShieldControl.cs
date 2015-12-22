@@ -25,7 +25,7 @@ public class ShieldControl : MonoBehaviour {
 	void Update () {
 		//we get the position of the player
 		//TODO changer le GetChild en get player?
-		Vector3 pos = transform.parent.GetChild(0).position;
+		Vector3 pos = transform.parent.GetComponentInChildren<Inventory>().gameObject.transform.position;
 		
 		//we get the position of the camera relative at the current scene
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -53,11 +53,11 @@ public class StatePlayer : MonoBehaviour {
 	/// </summary>
 	public void TakeItem(){
 		if (itemsInRange.Count > 0) {
-			Debug.Log ("Can pickup");
 			GameObject itemToTake = itemsInRange [0];
 			Item item = itemToTake.GetComponent<Item>();
 			//if the player has picked up the item we remove it from the list of items we can pick up
-			if(item.PickUp(gameObject.transform.GetChild(0).gameObject))
+			GameObject player = this.GetComponentInChildren<Inventory>().gameObject;
+			if(item.PickUp(player))
 				RemoveItemTriggered(itemToTake);
 		}
 

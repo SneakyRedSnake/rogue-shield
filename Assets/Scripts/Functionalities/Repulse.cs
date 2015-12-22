@@ -6,7 +6,7 @@ using System.Collections;
 /// 	with a given force
 /// </summary>
 public class Repulse : MonoBehaviour {
-	[SerializeField]LayerMask whatCanRepulse;		//what the shield can repulse
+	[SerializeField]LayerMask whatCanRepulse;				//what the shield can repulse
 	[SerializeField]float repulseForce = 10000f;			//the force of the repulsion
 
 

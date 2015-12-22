@@ -14,12 +14,17 @@ public class BaseEntity : MonoBehaviour {
 	//What is ground for the entity
 	[SerializeField]LayerMask whatIsGround;
 	//the radius of the circle where we will check if we have the ground
-	[SerializeField]float isGroundedCircleRadius = 0.1f;
+	[SerializeField]float isGroundedCircleRadius = 0.051f;
+
+	[SerializeField]Transform groundCheck;
+
 	//the bool to know if we are on the ground or not
 	private bool grounded;
+
 	// Use this for initialization
 	void Start () {
 		collids = GetComponent<Collider2D> ();
+		groundCheck = transform.Find("GroundCheck");
 		this.grounded = false;
 	}
 	
@@ -28,7 +33,9 @@ public class BaseEntity : MonoBehaviour {
 		Vector2 position = transform.position;
 		position.y = collids.bounds.min.y + 0.1f;
 		Debug.DrawRay (position, -Vector2.up * isGroundedCircleRadius);
-		this.grounded = Physics2D.CircleCast (position, isGroundedCircleRadius, -Vector2.up, isGroundedCircleRadius, whatIsGround.value);
+		this.grounded = Physics2D.OverlapCircle (groundCheck.position, isGroundedCircleRadius, whatIsGround);
+
+		Debug.Log (this.grounded);
 	}
 
 	public bool IsGrounded() {

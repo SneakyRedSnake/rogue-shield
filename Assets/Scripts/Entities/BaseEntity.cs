@@ -14,7 +14,7 @@ public class BaseEntity : MonoBehaviour {
 	//What is ground for the entity
 	[SerializeField]LayerMask whatIsGround;
 	//the radius of the circle where we will check if we have the ground
-	[SerializeField]float isGroundedCircleRadius = 0.051f;
+	[SerializeField]float isGroundedCircleRadius = 0.5f;
 
 	[SerializeField]Transform groundCheck;
 
@@ -34,8 +34,6 @@ public class BaseEntity : MonoBehaviour {
 		position.y = collids.bounds.min.y + 0.1f;
 		Debug.DrawRay (position, -Vector2.up * isGroundedCircleRadius);
 		this.grounded = Physics2D.OverlapCircle (groundCheck.position, isGroundedCircleRadius, whatIsGround);
-
-		Debug.Log (this.grounded);
 	}
 
 	public bool IsGrounded() {

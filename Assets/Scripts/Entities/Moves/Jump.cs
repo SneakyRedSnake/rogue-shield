@@ -69,12 +69,16 @@ public class Jump : MonoBehaviour
 	private IEnumerator JumpCoroutine() {
 		jump = true;
 		float time = 0;
-		//We jump while we want and while we can
+
+		// First strong impulsion
+		rigidbody2D.AddForce (new Vector2 (0f, jumpForce), ForceMode2D.Impulse);
+
+		// Slow progression while pressing jump
 		while( (time < minJumpDuration) || (jump && time < maxJumpDuration)) {
 			float proportion = time/maxJumpDuration;
 			Vector2 jumpStrength = new Vector2(0f,jumpForce);
 			jumpStrength = Vector2.Lerp(jumpStrength,Vector2.zero,proportion);
-			rigidbody2D.AddForce(jumpStrength);
+			rigidbody2D.AddForce(jumpStrength, ForceMode2D.Impulse);
 			time += Time.deltaTime;
 			yield return null;
 		}

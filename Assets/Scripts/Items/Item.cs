@@ -12,7 +12,9 @@ public abstract class Item : MonoBehaviour, IItem {
 
 	public abstract void Use();
 	public bool PickUp(GameObject receiver){
+		Debug.Log ("pick");
 		Inventory inventory = receiver.GetComponent<Inventory> ();
+		Debug.Log ("inv" + inventory);
 		//if there is an inventory
 		if (inventory) {
 			//we add the gameobject to the inventory

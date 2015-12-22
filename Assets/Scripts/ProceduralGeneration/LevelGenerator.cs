@@ -24,12 +24,15 @@ namespace Procedural
 		private int levelHeight;
 		public LevelGenerationStrategy levelGenerationStrategy;
 
+		// Components variables
+		public int trapsPerRoom = 5;
+		public int monstersPerRoom = 5;
+
 		private int roomCounter = 0;
 		private Transform environment; 				// Stores the roo object for the environment
 		// Use this for initialization
 		void Start ()
 		{
-			int nbIter = 0;
 			float elapsedTime = Time.realtimeSinceStartup;
 
 			// Suppose wall prefab is a square
@@ -228,16 +231,16 @@ namespace Procedural
 
 			Component[,] comps = room.getComponents();
 
-			for (int i = 0; i < 20; i++) {
+			for (int i = 0; i < trapsPerRoom; i++) {
 
 				int xRand = (int) UnityEngine.Random.Range (1, width - 1);
 				int yRand = (int) UnityEngine.Random.Range (1, height - 1); 
 
-				if(comps[xRand, yRand] == null || comps[xRand, yRand] == Component.None)
+				if(comps[xRand, yRand] == Component.None)
 					comps[xRand, yRand] = Component.Trap;
 			}
 
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < monstersPerRoom; i++) {
 				
 				int xRand = (int) UnityEngine.Random.Range (1, width - 2);
 				int yRand = (int) UnityEngine.Random.Range (1, height - 2); 

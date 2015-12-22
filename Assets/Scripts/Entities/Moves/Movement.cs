@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
 {
 	[SerializeField]
 	[Range(0f,30f)] float maxSpeed = 10f;				// The fastest the game object can travel in the x axis.
-	[SerializeField] bool airControl = true;//whether the player can be controlled while in the air
+	[SerializeField] float airControl = 1f;//whether the player can be controlled while in the air
 	[SerializeField] float accelerationSpeed = 100;//speed of acceleration
 	[SerializeField] float knockBackInactionTime = 0.2f;//time while we cannot move after a knockback
 	[SerializeField] float airControlAccelerationFactor = 10f;//speed of move changement while in the air
@@ -42,17 +42,21 @@ public class Movement : MonoBehaviour
 	/// <param name="move">the speed we want</param>
 	public void Move(float move)
 	{
+		//Debug.Log ("Moving : " + move + " while grounded = " + baseEntity.IsGrounded ());
 		if (!isKnocked) {//we can only move if we are not knocked back
-			if (baseEntity.IsGrounded()) {
-				move *= maxSpeed;
+			if (!baseEntity.IsGrounded()) {
 
+				//Debug.Log("Moving by : " + baseEntity.rigidbody2D.velocity.x + "  Adding : " + move * maxSpeed);
+				move = move * airControl;
+				baseEntity.rigidbody2D.velocity = new Vector2(move * maxSpeed, baseEntity.rigidbody2D.velocity.y);
 			} else {
-				move = maxSpeed * (airControl ? move*airControlAccelerationFactor : 0);
+				baseEntity.rigidbody2D.velocity = new Vector2(move * maxSpeed, baseEntity.rigidbody2D.velocity.y);
 			}
-			float speedX = rigidbody2D.velocity.x + move * accelerationSpeed * Time.deltaTime;
-			if (Mathf.Abs (speedX) > maxSpeed)
-				speedX = maxSpeed * Mathf.Sign (speedX);
-			rigidbody2D.velocity = new Vector2 (speedX, rigidbody2D.velocity.y);
+
+			if (Mathf.Abs(baseEntity.rigidbody2D.velocity.x) > maxSpeed) {
+				Debug.Log("Floor !");
+				baseEntity.rigidbody2D.velocity = new Vector2(move * maxSpeed, baseEntity.rigidbody2D.velocity.y);
+			}
 		}
 	}
 

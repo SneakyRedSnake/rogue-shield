@@ -8,8 +8,8 @@ public class HealthItem : Item {
 	[SerializeField] int numberOfHealth; 			//the number of health this item give
 
 	public override void Use(){
-		//TODO add health
-		Debug.Log ("add " + numberOfHealth + "pv");
+		Debug.Log ("used health item");
+		gameObject.GetComponent<HealthBehavior> ().addHealth (numberOfHealth);
 		Destroy (gameObject);
 	}
 }

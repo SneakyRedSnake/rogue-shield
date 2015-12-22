@@ -85,5 +85,12 @@ public class HealthBehavior : MonoBehaviour {
 		health = m;
 	}
 
+	public void addHealth(float h){
+		OnDamageTaken ();//call abstract signal for damage taken
+		health += h;
+		if (health > maxHealth) {
+			health = maxHealth;
+		}
 
+	}
 }

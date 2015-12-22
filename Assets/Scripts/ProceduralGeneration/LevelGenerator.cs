@@ -10,6 +10,7 @@ namespace Procedural
 		public Transform wall;
 		public GameObject player;
 		public Transform ennemy;
+		public Transform trap;
 		public Transform wallPlatformInstance;
 
 		public int minimumDistance = 6;
@@ -54,7 +55,7 @@ namespace Procedural
 				Room room = level.Rooms[(int)v.x, (int)v.y];
 				room.Scale(xWallScaleFactor, yWallScaleFactor);
 		
-				Component[,] comps = room.Components;
+				Component[,] comps = room.getComponents();
 				
 				GameObject roomFolder = new GameObject ("Room" + roomCounter);
 				Transform roomFolderTransform = roomFolder.transform;
@@ -72,6 +73,10 @@ namespace Procedural
 						case Component.Wall:
 							Transform wallInstance = (Transform)Instantiate (wall, new Vector3 (room.getPosition().x * 20 + i * xWallScaleFactor, room.getPosition().y * 20 + j * yWallScaleFactor, 0), Quaternion.identity);
 							wallInstance.SetParent (roomFolderTransform);
+							break;
+						case Component.Trap:
+							Transform trapInstance = (Transform)Instantiate (trap, new Vector3 (room.getPosition().x * 20 + i * xWallScaleFactor, room.getPosition().y * 20 + j * yWallScaleFactor, 0), Quaternion.identity);
+							trapInstance.SetParent (roomFolderTransform);
 							break;
 						}
 					}
@@ -219,7 +224,30 @@ namespace Procedural
 			}
 		}
 
-		private void PopulateRoom( Room room) {
+		private void PopulateTrapsAndMonsters (Room room, int width, int height){
+
+			Component[,] comps = room.getComponents();
+
+			for (int i = 0; i < 20; i++) {
+
+				int xRand = (int) UnityEngine.Random.Range (1, width - 1);
+				int yRand = (int) UnityEngine.Random.Range (1, height - 1); 
+
+				if(comps[xRand, yRand] == null || comps[xRand, yRand] == Component.None)
+					comps[xRand, yRand] = Component.Trap;
+			}
+
+			for (int i = 0; i < 5; i++) {
+				
+				int xRand = (int) UnityEngine.Random.Range (1, width - 2);
+				int yRand = (int) UnityEngine.Random.Range (1, height - 2); 
+				
+				if(comps[xRand, yRand] != Component.None)
+					comps[xRand, yRand] = Component.Monster;
+			}
+		}
+
+		private void PopulateRoom(Room room) {
 			int width = room.Width;
 			int height = room.Height;
 
@@ -235,6 +263,8 @@ namespace Procedural
 				PopulatePlatformGoingUp(room, width, height);
 				break;
 			}
+
+			PopulateTrapsAndMonsters (room, width, height);
 		}
 
 		/**

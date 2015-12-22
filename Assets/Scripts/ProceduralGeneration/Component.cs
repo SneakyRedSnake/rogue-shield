@@ -7,7 +7,9 @@ namespace Procedural
 		None,
 		Collectible,
 		Platform,
-		Wall
+		Wall,
+		Monster,
+		Trap
 	}
 }
 

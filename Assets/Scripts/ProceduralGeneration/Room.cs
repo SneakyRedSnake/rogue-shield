@@ -27,6 +27,8 @@ namespace Procedural
 				for(int j = 0; j < height; j++) {
 					if((j==0) || (j == height -1) || (i == 0) || i == (width - 1))
 						components[i,j] = Component.Wall;
+					else
+						components[i,j] = Component.None;
 				}
 			}
 		}
@@ -67,10 +69,13 @@ namespace Procedural
 			components [(int)position.x, (int)position.y] = component;
 		}
 
+		public Component[,] getComponents() {
+			return components;
+		}
+
 		public Component[,] Components {
-			get  {
-				return components;
-			}
+			get;
+			set;
 		}
 
 		public void Scale(int xScale, int yScale) {

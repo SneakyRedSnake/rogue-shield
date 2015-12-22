@@ -9,7 +9,7 @@ public class HealthItem : Item {
 
 	public override void Use(){
 		Debug.Log ("used health item");
-		gameObject.GetComponent<HealthBehavior> ().addHealth (numberOfHealth);
+		gameObject.GetComponentInParent<HealthBehavior> ().addHealth (numberOfHealth);
 		Destroy (gameObject);
 	}
 }

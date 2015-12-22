@@ -24,7 +24,6 @@ public class BaseEntity : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		collids = GetComponent<Collider2D> ();
-		groundCheck = transform.Find("GroundCheck");
 		this.grounded = false;
 	}
 	
